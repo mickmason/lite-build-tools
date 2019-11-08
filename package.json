@@ -1,0 +1,38 @@
+{
+  "name": "basic-html-builder",
+  "version": "0.0.1",
+  "description": "A basic HTML builder",
+  "http-server": "./dist",
+  "keywords": [
+    "HTML",
+    "builder"
+  ],
+  "author": "Michael Mason",
+  "license": "ISC",
+  "watch": {
+    "copyhtml": {
+      "patterns": "./app",
+      "extensions": "html"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run watch & npm run testWatch",
+    "stop": "stop http-server",
+    "sass": "node-sass -w ./app -o ./dist",
+    "watch": "echo 'start watch' npm run sass & npm-watch copyhtml & npm run server",
+		"testWatch": "node watcher.js",
+    "copyhtml": "date && find app/. -type f -name \"*.html\" | xargs -Ifile rsync -vR file dist/ && echo '\n'",
+    "server": "echo 'http-server started' && node live-server.js"
+  },
+  "dependencies": {
+    "live-server": "^1.2.1"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.1.1",
+    "npm-run-all": "^4.1.5",
+    "npm-watch": "^0.6.0",
+    "watch": "^1.0.2",
+    "node-sass": "^4.12.0"
+  }
+}
