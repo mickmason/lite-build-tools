@@ -13,6 +13,10 @@
     "copyhtml": {
       "patterns": "./app",
       "extensions": "html"
+    },
+		"lintjs": {
+      "patterns": "./app",
+      "extensions": "js"
     }
   },
   "scripts": {
@@ -20,9 +24,11 @@
     "start": "npm run watch & npm run testWatch",
     "stop": "stop http-server",
     "sass": "node-sass -w ./app -o ./dist",
-    "watch": "echo 'start watch' npm run sass & npm-watch copyhtml & npm run server",
-		"testWatch": "node watcher.js",
+    "watch": "echo 'start watch' npm run sass & npm-watch copyhtml & npm-watch lintjs & npm run server",
+    "testWatch": "node watcher.js",
+		"lintjs": "./node_modules/.bin/eslint ./app/scripts && npm run copyjs",
     "copyhtml": "date && find app/. -type f -name \"*.html\" | xargs -Ifile rsync -vR file dist/ && echo '\n'",
+		"copyjs": "date && find app/. -type f -name \"*.js\" | xargs -Ifile rsync -vR file dist/ && echo 'files copied' '\n'",
     "server": "echo 'http-server started' && node live-server.js"
   },
   "dependencies": {
@@ -30,9 +36,10 @@
   },
   "devDependencies": {
     "copyfiles": "^2.1.1",
+    "eslint": "^6.6.0",
+    "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
     "npm-watch": "^0.6.0",
-    "watch": "^1.0.2",
-    "node-sass": "^4.12.0"
+    "watch": "^1.0.2"
   }
 }
