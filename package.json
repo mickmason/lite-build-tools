@@ -10,8 +10,18 @@
   "author": "Michael Mason",
   "license": "ISC",
   "watch": {
-		"lintjs": "./app/**/*.js",
-    "copyhtml": "./app/**/*.html"
+    "copyhtml": {
+      "patterns": [
+        "app"
+      ],
+      "extensions": "html"
+    },
+    "lintjs": {
+      "patterns": [
+        "app"
+      ],
+      "extensions": "js"
+    }
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -19,10 +29,10 @@
     "stop": "stop http-server",
     "sass": "node-sass -w ./app/sass -o ./dist/css",
     "watch:html": "npm-watch copyhtml",
-		"watch:js": "npm-watch lintjs", 
-		"lintjs": "./node_modules/.bin/eslint ./app/scripts && npm run copyjs",
+    "watch:js": "npm-watch lintjs",
+    "lintjs": "./node_modules/.bin/eslint ./app/scripts && npm run copyjs",
     "copyhtml": "find app/. -type f -name \"*.html\" | xargs -Ifile rsync -vR file dist/ && echo '\n'",
-		"copyjs": "find app/. -type f -name \"*.js\" | xargs -Ifile rsync -vR file dist/ && echo 'files copied' '\n'",
+    "copyjs": "find app/. -type f -name \"*.js\" | xargs -Ifile rsync -vR file dist/ && echo 'files copied' '\n'",
     "server": "node live-server.js"
   },
   "dependencies": {
@@ -33,7 +43,6 @@
     "eslint": "^6.6.0",
     "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
-    "npm-watch": "^0.6.0",
-    "watch": "^1.0.2"
+    "npm-watch": "^0.6.0"
   }
 }
