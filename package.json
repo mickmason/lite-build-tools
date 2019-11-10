@@ -10,26 +10,20 @@
   "author": "Michael Mason",
   "license": "ISC",
   "watch": {
-    "copyhtml": {
-      "patterns": "./app",
-      "extensions": "html"
-    },
-		"lintjs": {
-      "patterns": "./app",
-      "extensions": "js"
-    }
+		"lintjs": "./app/**/*.js",
+    "copyhtml": "./app/**/*.html"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run watch & npm run testWatch",
+    "start": "npm run watch:html & npm run watch:js & npm run sass & npm run server",
     "stop": "stop http-server",
-    "sass": "node-sass -w ./app -o ./dist",
-    "watch": "echo 'start watch' npm run sass & npm-watch copyhtml & npm-watch lintjs & npm run server",
-    "testWatch": "node watcher.js",
+    "sass": "node-sass -w ./app/sass -o ./dist/css",
+    "watch:html": "npm-watch copyhtml",
+		"watch:js": "npm-watch lintjs", 
 		"lintjs": "./node_modules/.bin/eslint ./app/scripts && npm run copyjs",
-    "copyhtml": "date && find app/. -type f -name \"*.html\" | xargs -Ifile rsync -vR file dist/ && echo '\n'",
-		"copyjs": "date && find app/. -type f -name \"*.js\" | xargs -Ifile rsync -vR file dist/ && echo 'files copied' '\n'",
-    "server": "echo 'http-server started' && node live-server.js"
+    "copyhtml": "find app/. -type f -name \"*.html\" | xargs -Ifile rsync -vR file dist/ && echo '\n'",
+		"copyjs": "find app/. -type f -name \"*.js\" | xargs -Ifile rsync -vR file dist/ && echo 'files copied' '\n'",
+    "server": "node live-server.js"
   },
   "dependencies": {
     "live-server": "^1.2.1"
