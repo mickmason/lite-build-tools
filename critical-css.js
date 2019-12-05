@@ -1,78 +1,85 @@
-const fs = require('fs');
-const path = require('path');
-const critical = require('critical');
-const arguments = process.argv;
+(function () {
+	const fs = require('fs');
+	const path = require('path');
+	const critical = require('critical');
+	const yargs = require('yargs');
+	const arguments = process.argv.slice(2);
 
-
-/* 
-	For all HTML files
+	/*
+	 *** Set up Command line arguments to the script 
+	*/
+	const argv = yargs.option('base', {
+		alias: 'b',
+		description: 'Critical base directory',
+		type: 'string'
+	}).option('inline', {
+		alias: 'i',
+		description: 'Write critical styles inline',
+		type: 'boolean'
+	}).option('css', {
+		alias: 'c',
+		description: 'CSS source file',
+		type: 'string'
+	}).array('css').option('width', {
+		alias: 'w',
+		description: 'Target viewport width',
+		type: 'number'
+	}).option('height', {
+		alias: 't',
+		description: 'Target viewport height',
+		type: 'number'
+	}).option('dimensions', {
+		alias: 'n',
+		description: 'Target viewport dimensions',
+		type: 'string'
+	}).array('dimensions').option('dest', {
+		alias: 'd',
+		description: 'Provide a file for output',
+		type: 'string'
+	}).option('minify', {
+		alias: 'm',
+		description: 'Minify output',
+		type: 'boolean'
+	}).option('ignore', {
+		alias: 'g',
+		description: 'Minify output',
+		type: 'string'
+	}).array('ignore')
+	.argv;	
 	
-	I need a path for a CSS file
-	I need a single filepath or a directory path for HTML file(s)
-		Check if a filepath or a directory name has been given
-			if argv[2] == .html 
-			else if argv[2] == path
-			
-		Then	if filepath do
-				create critical options with filename as HTMLsource, CSS
-				fs.readFile(filepath)
-					critical.generate()  
-			else if directory do
-				foreach htmlfile
-					create critical options with htmlFile, CSS file
-					fs.readFile(filepath)
-					critical.generate() with filename as HTMLsource
-*/
+	/*
+	 *** Options for critical 
+	*/
+	let criticalOptions = {} ;
 
-let cssPath = null;
-let sourcePathType = 'F'; 
-let criticalOptions = {
-	base: './',
-	inline: true,
-	minify: true,
-	src: '',	
-	dimensions: [{
-			width: 360,
-			height: 640
-		 },
-		 {
-			width: 1366,
-			height: 768
-		 },
-		{
-			width: 1440,
-			height: 900
-		},
-		{
-			width: 1920,
-			height: 1080
-	}]
-};
-
-if (!arguments[2] || !arguments[3]) {
-	throw new Error('Critical path CSS: Arguments must be a CSS filepath or directory name.');
-	process.exit(1);
-}
-try {
-	if (fs.statSync(arguments[2]).isFile()) {
-		criticalOptions.src = arguments[2];
-		criticalOptions.dest = arguments[2];
-		critical.generate(criticalOptions);
-	} else if (fs.statSync(arguments[2]).isDirectory()) {
-		sourcePath = arguments[2];
-		sourcePathType = 'D';
-	} else {
-		throw new Error('Critical path CSS: Arguments must be a HTML filepath or directory name.');
+	/* 
+	 *** Search for config file 
+	*/
+	const fsFiles = fs.readdirSync('./'); 
+	if (fsFiles.includes('critical-css.config.js')) {
+			Object.assign(criticalOptions, require('./'+fsFiles[fsFiles.indexOf('critical-css.config.js')]));
 	}
 	
-} catch (e) {
-	console.error('Critical path CSS: Arguments must be a HTML filepath or directory name, followed by a CSS filepath');
-	console.error(e.message);
-	process.exit(1);
-}
-
-
-/*
-
-
-*/
+	/* 
+	 *** Handle command line arguments 
+	*/	
+	criticalOptions.base = (argv.base) ? (argv.base) : criticalOptions.base; 
+	criticalOptions.inline = (argv.inline || argv.dest === undefined) ? true : criticalOptions.inline;
+	criticalOptions.minify = (argv.minify) ? true : criticalOptions.minify;
+	criticalOptions.src = (argv._[0]) ?  (argv._[0]) : criticalOptions.src;	
+	criticalOptions.dest = (argv.dest) ? (argv.dest) : (criticalOptions.dest !== undefined) ? criticalOptions.dest : criticalOptions.src; 
+	criticalOptions.css = (argv.css) ? (argv.css) : criticalOptions.css; 
+	criticalOptions.width = (argv.width) ? (argv.width) : criticalOptions.width; 
+	criticalOptions.height = (argv.height) ? (argv.height) : criticalOptions.height; 
+	criticalOptions.dimensions = (argv.dimensions) ? (argv.dimensions) : criticalOptions.dimensions;
+	
+	/* Give it a twirl */
+	try {
+		critical.generate(criticalOptions);
+	} catch (e) {
+		console.error('Critical path CSS: Arguments must be a HTML filepath or directory name, followed by a CSS filepath');
+		console.error(e.message);
+	}
+	
+	/* Fin */
+})();
