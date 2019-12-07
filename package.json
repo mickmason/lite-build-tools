@@ -36,18 +36,12 @@
         "app"
       ],
       "extensions": "css"
-    },
-    "postcss": {
-      "patterns": [
-        "app"
-      ],
-      "runOnChangeOnly": true,
-      "extensions": "css"
     }
-  },
+	},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run watch:sass & npm run watch:html & npm run watch:js & npm run watch:css & npm run watch:postcss & npm run server",
+    "start": "npm run watch:sass & npm run watch:html & npm run watch:js & npm run watch:css & npm run server",
+		"build": "npm run copy:html && npm run postcss && npm run criticalcss ",
     "stop": "stop http-server",
     "sass": "node-sass ./app/sass -o ./app/css",
     "watch:sass": "npm-watch sass",
@@ -61,6 +55,7 @@
     "copy:html": "find app/. -type f -name \"*.html\" | xargs -Ifile rsync -vR file dist/ && echo '\n'",
     "copy:css": "find app/. -type f -name \"*.css\" | xargs -Ifile rsync -vR file dist/ && echo file 'copied' '\n'",
     "copy:js": "find app/. -type f -name \"*.js\" | xargs -Ifile rsync -vR file dist/ && echo file 'copied' '\n'",
+		"criticalcss": "node critical-css.js",
     "server": "node live-server.js"
   },
   "dependencies": {},

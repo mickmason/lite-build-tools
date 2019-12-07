@@ -54,7 +54,6 @@ h3 {
   flex-direction: column;
   justify-content: flex-start;
   height: calc(100vh - 2rem);
-  width: 100%;
   padding: 2rem; }
 
 /* Hero component */
