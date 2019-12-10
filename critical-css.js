@@ -1,13 +1,21 @@
 (function () {
+	
+	/** Debug or not debug **/
+	const debug = true;
+	
 	const fs = require('fs');
 	const path = require('path');
 	const critical = require('critical');
 	const yargs = require('yargs');
-	const arguments = process.argv.slice(2);
+	
 	
 	let sourcePath = null;
 	let isDir = false;
 	const messagePrefix = '[critical-css.js]';
+	/*
+	 *** Options for critical 
+	*/
+	let criticalOptions = {} ;
 	
 	/*
 	 *** 	Set up Command line arguments to the script:
@@ -62,16 +70,6 @@
 	}).array('ignore')
 	.usage(messagePrefix + ' Provide a source file or directory as the first CLI argument or as src value in ./critical-css.config.js')
 	.argv;	
-	
-	/**
-		*** Check for source file or directory
-	**/
-	
-	
-	/*
-	 *** Options for critical 
-	*/
-	let criticalOptions = {} ;
 
 	/* 
 	 *** Search for config file 
@@ -81,66 +79,61 @@
 			Object.assign(criticalOptions, require('./'+fsFiles[fsFiles.indexOf('critical-css.config.js')]));
 	}
 	
-	//!argv.$0 && !criticalOptions.src
-	if (argv._[0] === undefined && criticalOptions.src === undefined) {
+	/* 
+	 *** Handle command line arguments 
+	*/	
+	criticalOptions.base 				= (argv.base) ? (argv.base) : criticalOptions.base; 
+	criticalOptions.inline 			= (argv.inline || argv.dest === undefined) ? true : criticalOptions.inline;
+	criticalOptions.minify 			= (argv.minify) ? true : criticalOptions.minify;
+	criticalOptions.src 				= (argv._[0]) ? (argv._[0]) : criticalOptions.src;	
+	criticalOptions.dest 				= (argv.dest) ? (argv.dest) : (criticalOptions.dest !== undefined) ? criticalOptions.dest : criticalOptions.src; 
+	criticalOptions.css 				= (argv.css) ? (argv.css) : criticalOptions.css; 
+	criticalOptions.width 			= (argv.width) ? (argv.width) : criticalOptions.width; 
+	criticalOptions.height 			= (argv.height) ? (argv.height) : criticalOptions.height; 
+	criticalOptions.dimensions 	= (argv.dimensions) ? (argv.dimensions) : criticalOptions.dimensions;
+	
+	/* 
+	 ***	 Check there is a src in critialOptions
+	 			 Quit if not
+	*/
+	if (criticalOptions.src === undefined && fs.statSync(criticalOptions.src).isDirectory() === false && fs.statSync(criticalOptions.src).isFile() === false) {
 		console.error(`${messagePrefix} Provide source file or directory as the first CLI argument or as the src value in critical-css.config.js`);
 		console.log(`${messagePrefix} Use ${argv.$0} --help for more`);
 		return;
 	} else {
 		sourcePath = (argv._[0] || criticalOptions.src);
 	}
-	isDir = fs.statSync(sourcePath).isDirectory();
-	console.log(isDir);
 	/* 
-	 *** Handle command line arguments 
-	*/	
-	criticalOptions.base = (argv.base) ? (argv.base) : criticalOptions.base; 
-	criticalOptions.inline = (argv.inline || argv.dest === undefined) ? true : criticalOptions.inline;
-	criticalOptions.minify = (argv.minify) ? true : criticalOptions.minify;
-	criticalOptions.src = (argv._[0]) ?  (argv._[0]) : criticalOptions.src;	
-	criticalOptions.dest = (argv.dest) ? (argv.dest) : (criticalOptions.dest !== undefined) ? criticalOptions.dest : criticalOptions.src; 
-	criticalOptions.css = (argv.css) ? (argv.css) : criticalOptions.css; 
-	criticalOptions.width = (argv.width) ? (argv.width) : criticalOptions.width; 
-	criticalOptions.height = (argv.height) ? (argv.height) : criticalOptions.height; 
-	criticalOptions.dimensions = (argv.dimensions) ? (argv.dimensions) : criticalOptions.dimensions;
+	 *** Is the source path a directory
+	*/
+	isDir = fs.statSync(criticalOptions.src).isDirectory();
 	
-	async function criticalAsync(files, options) {
-			const startSrc = criticalOptions.src;
-			for (let $i = 0; $i < files.length; $i++) {
-				console.log(`files[${$i}]: ${files[$i]}`);
-				let htmlFile = files[$i];
-				
-				htmlFile = htmlFile.slice(htmlFile.indexOf(startSrc));
-				console.log(`htmlFile: ${htmlFile}`);
-				options.src = htmlFile;
-				options.dest = htmlFile;
-				
-				await critical.generate(options);				
-			}
-			
-	}
-	
-	/* Give it a twirl */
+	/* 
+	 *** Execute critical.generate 
+	 */
 	try {
 		if (isDir) {
-			let htmlFiles = recursiveFileSearch(process.cwd() + '/' +sourcePath, '.html');
-			if (htmlFiles) {
-				console.log(htmlFiles.length);
-				
-				criticalAsync(htmlFiles, criticalOptions);
+			try {
+				criticalAsync(recursiveFileSearch(process.cwd() + '/' +sourcePath, '.html'), criticalOptions);	
+			} catch (err) {
+				console.log(err.message);
+				(debug) ? console.error(e.stack) : false ;
 			}
+			
 		} else {
 			critical.generate(criticalOptions);	
 		}
 	} catch (e) {
 		console.error(e.message);
-		console.error(e.stack);
+		(debug) ? console.error(e.stack) : false ;
 	} 
 	
 	/* 
 		**	Recursively search for files by extension
 		**	sourcePath is an absolute file path, extn is a file extension
 		** 	Returns an array of absoulte file paths
+		** 	@param sourcePath is the root of a file system brach
+		**	@param extn is a file extension to get
 	*/
 	function recursiveFileSearch(sourcePath, extn) {
 		let filesArray = [];
@@ -159,16 +152,33 @@
 					filesArray.push(file);
 				}
 			}
-		
 			if (subdirs.length) {
 				for (subdir of subdirs) {
 					recursiveReadDirs(path.normalize(subdir));
 				}
-			} else {
-				return true;
 			}
+			return true;
 		}
 		return (filesArray.length) ? filesArray : false;
+	}
+	/*
+		**	Asynchronous wrapper for critical.generate()
+		**	Using await to proecss an array of files 
+		** 	@param files is an array of HTML files
+		**	@param options is a set of critical options
+	*/
+	async function criticalAsync(files, options) {
+		if (!files.length || !options) {
+			throw new Error(`${messagePrefix} Provide a source path and options`)
+		}
+		const startSrc = criticalOptions.src;
+		for (let $i = 0; $i < files.length; $i++) {
+			let htmlFile = files[$i];
+			htmlFile = htmlFile.slice(htmlFile.indexOf(startSrc));
+			options.src = htmlFile;
+			options.dest = htmlFile;
+			await critical.generate(options);				
+		}
 	}
 	
 	

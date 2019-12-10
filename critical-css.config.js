@@ -3,6 +3,7 @@ module.exports = {
 	inline: true,
 	html: undefined,
 	src: 'dist/',	
+	isDir: false,
 	css: 'dist/css/style.css', 
 	dest: 'dist/index.html', 
 	width: undefined, 
