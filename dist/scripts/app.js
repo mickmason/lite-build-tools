@@ -1,8 +1,5 @@
-"use strict";
-/* app.js */
-
+/* App.js */
 function sayHello(name) {
-  console.log("Hello ".concat(name));
+	console.log(`Hello ${name}`);
 }
-
-sayHello();
+sayHello(); 

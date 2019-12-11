@@ -1,4 +1,5 @@
 /* Lib 1 file */
-cons = ('Hello') => {
-	console.log(`Hello`);
-}
+const howdy = (hi) => {
+	console.log(hi);
+};
+howdy('Hello');

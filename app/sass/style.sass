@@ -9,11 +9,11 @@ body
 	font-family: "Quattrocento", serif
 	font-size: 100% 
 	line-height: 1.45  
-h1, h2, h3, h4, h5 
+h1, h2, h3, h4, h5
 	font-family: "Quattrocento Sans", sans-serif 
 	line-height: 1.35 
 h1
-	font-size: 2.0581rem 
+	font-size: 2.0581rem
 h2
 	font-size: 1.618rem
 h3
@@ -28,49 +28,6 @@ h3
 @media screen and (min-width: 1400px) 
 	html
 		font-size: 20px
-.container
-	padding: 1rem
 
-.layout4x2
-	display: grid
-	grid-template-rows: auto auto 
-	grid-template-columns: repeat(4, 1fr)
-.flexbox
-	display: flex
-	justify-content: flex-start 
-
-.hero, .feature-section
-	position: relative
-	display: flex
-	flex-direction: column
-	justify-content: flex-start
-	height: calc(100vh - 2rem)
-	padding: 2rem
-/* Hero component */
-.hero
-	color: #f0f0f0
-	background-image: url(../media/happy-kid.jpg)
-	background-repeat: no-repeat
-	background-size: cover
-	background-position: center		
-	background-color: transparent
-	&__body, &__header, &__footer
-		z-index: 10
-		display: flex
-		flex-direction: column
-		justify-content: center
-	&__body
-		flex: 1 0 80%
-	&__header, &__footer
-		flex: 0 1 10%
-	&__image-overlay
-		position: absolute
-		top: 0
-		left: 0
-		right: 0
-		bottom: 0
-		z-index: 0
-		background-color: rgba(#000, 0.56)
-.feature-section
-	background-color: blue
-	color: #f0f0f0
+@import 'partials/grid';
+@import 'partials/hero';
