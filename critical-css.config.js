@@ -2,7 +2,7 @@ module.exports = {
 	base: './', 
 	inline: true,
 	html: undefined,
-	src: 'dist/',	
+	src: 'dist/index.html',	
 	isDir: false,
 	css: 'dist/css/style.css', 
 	dest: 'dist/index.html', 

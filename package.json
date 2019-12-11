@@ -37,11 +37,11 @@
       ],
       "extensions": "css"
     }
-	},
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run watch:sass & npm run watch:html & npm run watch:js & npm run watch:css & npm run server",
-		"build": "npm run copy:html && npm run postcss && npm run criticalcss ",
+    "start:build": "npm run copy:html && npm run copy:css && npm run lintjs && npm run babeljs && npm run uglifyjs && npm run concatjs && npm run postcss && npm run criticalcss ",
     "stop": "stop http-server",
     "sass": "node-sass ./app/sass -o ./app/css",
     "watch:sass": "npm-watch sass",
@@ -50,16 +50,22 @@
     "watch:css": "npm-watch lintcss",
     "watch:postcss": "npm-watch postcss",
     "lintjs": "./node_modules/.bin/eslint ./app/scripts && npm run copy:js",
+    "babeljs": "./node_modules/.bin/babel ./dist/scripts/app.js -o ./dist/scripts/app.js",
+    "uglifyjs": "uglifyjs ./dist/scripts/app-concat.js",
     "lintcss": "csslint ./app/css/style.css",
+		"concatjs": "node ./bc_modules/concatente-js.js",
     "postcss": "find app/. -type f -name \"*.css\" | xargs -Ifile ./node_modules/.bin/postcss file -d ./dist/css/",
     "copy:html": "find app/. -type f -name \"*.html\" | xargs -Ifile rsync -vR file dist/ && echo '\n'",
     "copy:css": "find app/. -type f -name \"*.css\" | xargs -Ifile rsync -vR file dist/ && echo file 'copied' '\n'",
     "copy:js": "find app/. -type f -name \"*.js\" | xargs -Ifile rsync -vR file dist/ && echo file 'copied' '\n'",
-		"criticalcss": "node critical-css.js",
+    "criticalcss": "node ./bc_modules/critical-css.js",
     "server": "node live-server.js"
   },
   "dependencies": {},
   "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
     "autoprefixer": "^9.7.3",
     "browserslist": "^4.7.3",
     "chromium": "^2.1.1",
@@ -75,6 +81,7 @@
     "postcss-cli": "^6.1.3",
     "postcss-load-config": "^2.1.0",
     "puppeteer": "^2.0.0",
+    "uglify-js": "^3.7.2",
     "yargs": "^15.0.2"
   }
 }

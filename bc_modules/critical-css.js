@@ -76,7 +76,7 @@
 	*/
 	const fsFiles = fs.readdirSync('./'); 
 	if (fsFiles.includes('critical-css.config.js')) {
-			Object.assign(criticalOptions, require('./'+fsFiles[fsFiles.indexOf('critical-css.config.js')]));
+			Object.assign(criticalOptions, require('../'+fsFiles[fsFiles.indexOf('critical-css.config.js')]));
 	}
 	
 	/* 
