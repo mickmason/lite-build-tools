@@ -37,7 +37,7 @@
       ],
       "extensions": "svg"
     },
-		"svgstore:imgs": {
+    "svgstore:imgs": {
       "patterns": [
         "app/media/svg/images"
       ],
@@ -92,7 +92,9 @@
     "criticalcss": "node ./bc_modules/critical-css.js",
     "server": "node live-server.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "gsap": "^3.0.5"
+  },
   "devDependencies": {
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
