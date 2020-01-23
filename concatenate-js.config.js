@@ -1,4 +1,4 @@
 module.exports = {
 	target: './dist/scripts/app-concat.js',
-	files: ['./dist/scripts/libs/lib-1.js', './dist/scripts/app.js']
+	files: ['node_modules/gsap/dist/gsap.js', './app/scripts/app.js', './app/scripts/app-animations.js', ]
 }

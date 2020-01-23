@@ -43,12 +43,7 @@
       ],
       "extensions": "svg"
     },
-    "lintjs": {
-      "patterns": [
-        "app"
-      ],
-      "extensions": "js"
-    },
+    "js:dev": [ "app/scripts/app.js", "app/scripts/app-animations.js" ],
     "lintcss": {
       "patterns": [
         "app"
@@ -71,7 +66,7 @@
     "sass:build": "node-sass ./app/sass/ -o ./app/css/",
     "watch:sass": "npm-watch sass",
     "watch:html": "npm-watch copy:html",
-    "watch:js": "npm-watch lintjs",
+    "watch:js": "npm-watch js:dev",
     "watch:css": "npm-watch copy:css",
     "watch:postcss": "npm-watch postcss",
     "watch:media": "npm-watch copy:media",
@@ -79,7 +74,7 @@
     "watch:svgimgs": "npm-watch svgstore:imgs",
     "svgstore": "node ./bc_modules/svgstore.js",
     "svgstore:imgs": "node ./bc_modules/svgstore.js --images",
-    "lintjs": "./node_modules/.bin/eslint ./app/scripts && npm run copy:js",
+    "js:dev": "npm run concatjs", 	
     "babeljs": "./node_modules/.bin/babel ./dist/scripts/app.js -o ./dist/scripts/app.js",
     "uglifyjs": "uglifyjs ./dist/scripts/app.js -o ./dist/scripts/app.js",
     "lintcss": "csslint ./app/css/style.css && copy:css",

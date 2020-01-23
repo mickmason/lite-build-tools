@@ -1,4 +1,6 @@
 $vunit: 1.45rem
+$text: #303030
+
 *
 	box-sizing: border-box
 html
@@ -35,3 +37,65 @@ h3
 
 @import 'partials/grid';
 @import 'partials/hero';
+
+.gsap-test
+	color: $text
+	position: relative
+	display: flex
+	flex-direction: column
+	align-items: flex-start
+	padding-bottom: 2.64rem
+	&__heading
+		flex: 0 1 0
+	.future
+		overflow: hidden
+	&__dots
+		padding-top: 4rem
+		padding-bottom: 2rem
+		flex: 1 1 100%
+		display: flex
+		flex-direction: row
+		z-index: 0
+		&__dot
+			border-radius: 50%
+			width: 4rem
+			height: 4rem
+			margin-right: 1.5rem
+			flex: 0 1 auto
+			background-color: black
+			&:nth-child(1)
+				background-color: red
+			&:nth-child(2)
+				background-color: yellow
+			&:nth-child(3)
+				background-color: green
+			&:nth-child(4)
+				background-color: blue
+		&-controllers
+			flex: 1 1 100%
+			width: 100%
+			z-index: 10
+			button
+				padding: 0.5rem 0.75rem
+				font-size: 1rem
+				background-color: #efefef
+				transition: background-color 500ms ease-out
+				&:hover
+					background-color: #5f5f5f
+					color: white
+.gsap-test-svg
+	display: flex
+	flex-direction: column
+	padding-bottom: 2.64rem
+	height: 100vh
+	&__svg
+		
+		flex: 1 0 100%
+		display: flex
+		justify-content: center
+		align-items: center
+		#ah-logo
+			flex: 0 1 60%
+			max-height: 80%
+		
+		
