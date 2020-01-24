@@ -43,7 +43,7 @@
       ],
       "extensions": "svg"
     },
-    "js:dev": [ "app/scripts/app.js", "app/scripts/app-animations.js" ],
+    "js:dev": [ "app/scripts/" ],
     "lintcss": {
       "patterns": [
         "app"
@@ -74,7 +74,8 @@
     "watch:svgimgs": "npm-watch svgstore:imgs",
     "svgstore": "node ./bc_modules/svgstore.js",
     "svgstore:imgs": "node ./bc_modules/svgstore.js --images",
-    "js:dev": "npm run concatjs", 	
+    "js:dev": "npm run js:lint && npm run concatjs", 	
+		"js:lint": "./node_modules/.bin/eslint ./app/scripts/",
     "babeljs": "./node_modules/.bin/babel ./dist/scripts/app.js -o ./dist/scripts/app.js",
     "uglifyjs": "uglifyjs ./dist/scripts/app.js -o ./dist/scripts/app.js",
     "lintcss": "csslint ./app/css/style.css && copy:css",

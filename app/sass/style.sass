@@ -1,6 +1,4 @@
-$vunit: 1.45rem
-$text: #303030
-
+@import 'partials/project-globals'
 *
 	box-sizing: border-box
 html
@@ -8,19 +6,20 @@ html
 body
 	margin: 0 
 	padding: 0
-	font-family: "Quattrocento", serif
+	font-family: $base-font-family, serif 
 	font-size: 100% 
 	line-height: 1.45  
 h1, h2, h3, h4, h5
-	font-family: "Quattrocento Sans", sans-serif 
-	line-height: 1.35 
+	font-family: $heading-font-family, sans-serif 
+	line-height: 1.35
 h1
 	font-size: 2.0581rem
 h2
 	font-size: 1.618rem
 h3
 	font-size: 1.272rem
-
+button
+	font-family: $text-sans
 .svg-icon
 	max-width: 	2rem
 	max-height: 2rem

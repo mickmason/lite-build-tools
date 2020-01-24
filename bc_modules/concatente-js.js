@@ -1,4 +1,4 @@
-const debug = true;
+const debug = false;
 const fs = require('fs');
 const path = require('path');
 
@@ -44,7 +44,7 @@ function concatenate(target, input, newFile) {
 		}
 		if (newFile === true && fs.existsSync(target) && fs.lstatSync(target).isFile()) {
 			if (debug) {
-				console.log('New file is true, unlink file existing file');	
+				console.log('New file is true, unlink existing file');	
 			}
 			fs.unlinkSync(targetFile);
 		}

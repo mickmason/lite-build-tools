@@ -1,0 +1,119 @@
+//Global variables
+
+//Layout
+$body-margin:				0 			!default
+$body-padding:			0 			!default
+$content-max-width: 1600px	!default
+$text-max-width: 		none  	!default
+
+$base-cols: 4	!default
+
+//Spacing
+$line-height:			1.5	!default
+$vertical-unit: 	1rem * $line-height
+$gutter: 					$vertical-unit
+$feature-padding: $gutter * 1
+
+$heading-line-height: 1.3
+
+//Responsive
+$x-small: 			340px		!default
+$small: 				540px		!default
+$med: 					768px		!default
+$large: 				1024px	!default
+$x-large: 			1240px	!default	
+$xx-large:	 		1366px	!default
+$xxx-large: 		1440px	!default
+$big-screen: 		1600px	!default	
+
+// ** Colour
+$black: 			#000 			!default
+$text-black:	#303030 	!default
+
+// * Colours
+$brand-primary: 		$black	!default
+$brand-darker: 			darken($brand-primary, 16.8%)
+$brand-secondary: 	#707070	!default
+
+$red: 							#f00		!default
+$orange:						#f60 		!default
+$yellow:						#ff0 		!default
+$green:							#0f0 		!default
+$blue:							#00f 		!default
+$purple:						#4B0082	!default
+$violet:						#9400D3	!default
+
+$colors: ('primary': $brand-primary, 'secondary': $brand-secondary, 'red':  $red, 'orange': $orange, 'yellow': $yellow, 'green': $green, 'blue': $blue, 'purple': $purple, 'violet': $violet)
+
+
+/* Shades */
+$white:				#fff			!default
+$shade-01:		#f6f6f6		!default
+$shade-02:		#f0f0f0		!default
+$shade-03:		#e0e0e0		!default 
+$shade-04:		#e0e0e0		!default
+$shade-05:		#808080		!default
+
+$shades: ('white': $white, 'shade-01': $shade-01, 'shade-02': $shade-02, 'shade-03': $shade-03, 'shade-04': $shade-04, 'shade-05': $shade-05)
+
+$white-inverse: 	invert($white)
+$black-inverse: 	invert($black)
+$red-inverse: 		invert($red)
+$orange-inverse: 	invert($orange)
+$yellow-inverse: 	invert($yellow)
+$green-inverse: 	invert($green)
+$blue-inverse: 		invert($blue)
+$purple-inverse: 	invert($purple)
+$violet-inverse: 	invert($violet)
+
+$colours: $white, $black, $red, $orange, $yellow, $green, $blue, $purple, $violet !default
+$colour-inverses: $white-inverse, $black-inverse, $red-inverse, $orange-inverse, $yellow-inverse, $green-inverse, $blue-inverse, $purple-inverse, $violet-inverse	!default
+
+
+//** Typography
+$serif-font-family: 			'Quattrocento'
+$sans-font-family: 			'Quattrocento Sans'
+
+$base-font-family: 			$serif-font-family
+$heading-font-family: 	$sans-font-family 
+
+$text-colour: 		$text-black			!default
+$heading-colour: 	$text-colour		!default
+$link-color:			$brand-primary	!default	
+$link-active-color:			darken($brand-primary, 20%)
+
+$text-line-height: $line-height
+$heading-line-height: 1.3
+$heading-font-weight: 700
+
+//* Pentatonic scale n = 5; r = 2
+$text--2:		0.758rem		!default
+$text--1:		0.8706rem		!default
+$text-00: 	1rem				!default
+$text-01: 	1.1487rem		!default
+$text-02: 	1.3195rem		!default
+$text-03: 	1.5157rem  	!default
+$text-04: 	1.7411rem		!default
+$text-10: 	2.0rem			!default
+$text-11: 	2.2974rem		!default 
+$text-12: 	2.6390rem		!default
+
+$x-small-text:			$text--2
+$small-text:				$text--1
+$regular-text: 			$text-00
+$h5-text: 					$text-01
+$h4-text: 					$text-02
+$h3-text: 					$text-03
+$h2-text: 					$text-04
+$h1-text: 					$text-10
+$large-text: 				$text-11
+$super-large-text: 	$text-12
+
+$h5:			$h5-text
+$h4:			$h4-text
+$h3:			$h3-text
+$h2:			$h2-text
+$h1:			$h1-text
+
+//Project overrides
+$heading-font-weight: 300
