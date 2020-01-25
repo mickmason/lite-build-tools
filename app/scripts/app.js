@@ -3,8 +3,7 @@
 	/* 
 		GSAP Get Started tests
 		https://greensock.com/get-started/ 
-	*/ 
-
+	*/  
 	//Heading
 	gsap.to('.gsap-test__heading', {duration: 2, x: 200, color: 'rgba(69, 80, 140)', ease: 'back'}); 
 	gsap.to('.gsap-test__heading .past', {duration: 1.5, maxWidth: '0px', color: 'rgba(209, 103, 155)'});
