@@ -1,4 +1,5 @@
 /* Shades */
+@import url(partials/_test-import.css);
 * {
   box-sizing: border-box; }
 
@@ -26,7 +27,7 @@ h3 {
   font-size: 1.272rem; }
 
 button {
-  font-family: "Quattrocento Sans"; }
+  font-family: "Quattrocento"; }
 
 .svg-icon {
   max-width: 2rem;
@@ -94,7 +95,7 @@ button {
     background-color: rgba(0, 0, 0, 0.56); }
 
 .gsap-test {
-  color: #303030;
+  color: #000;
   position: relative;
   display: flex;
   flex-direction: column;

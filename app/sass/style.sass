@@ -1,11 +1,12 @@
 @import 'partials/project-globals'
+@import 'partials/_test-import.css'
 *
 	box-sizing: border-box
 html
 	font-size: 14px
 body
-	margin: 0 
-	padding: 0
+	margin: $body-margin 
+	padding: $body-margin
 	font-family: $base-font-family, serif 
 	font-size: 100% 
 	line-height: 1.45  
@@ -19,7 +20,7 @@ h2
 h3
 	font-size: 1.272rem
 button
-	font-family: $text-sans
+	font-family: $base-font-family
 .svg-icon
 	max-width: 	2rem
 	max-height: 2rem
@@ -27,7 +28,7 @@ button
 @media screen and (min-width: 600px) 
 	html
 		font-size: 16px
-@media screen and (min-width: 1200px)
+@media screen and (min-width: 1200px) 
 	html
 		font-size: 18px
 @media screen and (min-width: 1400px) 
@@ -38,7 +39,7 @@ button
 @import 'partials/hero';
 
 .gsap-test
-	color: $text
+	color: $black
 	position: relative
 	display: flex
 	flex-direction: column
